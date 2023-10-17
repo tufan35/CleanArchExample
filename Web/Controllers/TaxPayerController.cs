@@ -11,7 +11,7 @@ namespace Web.Controllers
     {
         readonly TaxPayerService _taxPayerService;
 
-        public TaxPayerController ( TaxPayerService taxPayerService )
+        public TaxPayerController ( TaxPayerService taxPayerService, AdvisorService advisorService )
         {
             _taxPayerService = taxPayerService;
         }
@@ -19,17 +19,17 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TaxPayer>>> GetAll ()
         {
-            var items = await _taxPayerService.GetAllTaxPayersAsync();
-            return Ok(items);
+            var taxPayers = await _taxPayerService.GetAllTaxPayersAsync();
+            return Ok(taxPayers);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTaxPayer ( Guid id )
         {
-            var item = await _taxPayerService.GetTaxPayerById(id);
-            if (item == null)
+            var taxPayer = await _taxPayerService.GetTaxPayerById(id);
+            if (taxPayer == null)
                 return NotFound();
-            return Ok(item);
+            return Ok(taxPayer);
         }
 
         [HttpPost]
@@ -37,6 +37,7 @@ namespace Web.Controllers
         {
             await _taxPayerService.CreateTaxPayerAsync(taxPayer);
             return CreatedAtAction(nameof(GetTaxPayer), new { id = taxPayer.Id }, taxPayer);
+
         }
 
         [HttpPut("{id}")]

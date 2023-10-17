@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class TaxPayer
-    {
-        public Guid Id { get; set; }
-        public string Identity{ get; set; }
-        public string Address{ get; set; }
-        public string NaceCode{ get; set; }
+    public class TaxPayer : BaseEntity
+    {        
+        public string NaceCode { get; set; }
+        public List<Address> Addresses { get; set; }
+        public List<Contact> Contacts  { get; set; }                
         //emukellefiyet
-        public string Obligation{ get; set; } 
-        public string Application { get; set; }
-            
+        public List<Obligation> Obligations { get; set; } 
+        public List<BusinessApplication> BusinessApplications { get; set; }
 
     }
 }

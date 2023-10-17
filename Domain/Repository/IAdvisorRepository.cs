@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Repository
 {
-    public interface ITaxPayerRepository : IBaseRepository<TaxPayer>
+    public interface IAdvisorRepository : IBaseRepository<Advisor>
     {
-    } 
+        Task<IEnumerable<TaxPayer>> GetAllTaxPayerAsync ( Guid advisorId );
+    }
 }

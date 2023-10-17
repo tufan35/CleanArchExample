@@ -14,18 +14,21 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<TaxPayerService>();
+builder.Services.AddScoped<AdvisorService>();
 
 //Ef
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("ConnectionDB"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("ConnectionDB"), b=> b.MigrationsAssembly("Web"));
 });
-
-
 //DAPPER
-builder.Services.AddTransient<IDbConnection>(( sp ) => new NpgsqlConnection(builder.Configuration.GetConnectionString("ConnectionDB")));
+builder.Services.AddTransient<IDbConnection>(( sp ) => 
+new NpgsqlConnection(builder.Configuration.GetConnectionString("ConnectionDB")));
+
+
 //builder.Services.AddScoped<ITaxPayerRepository, DapperTaxPayerRepository>();
 builder.Services.AddScoped<ITaxPayerRepository, TaxPayerRepository>();
+builder.Services.AddScoped<IAdvisorRepository, AdvisorRepository>();
 
 var app = builder.Build();
 

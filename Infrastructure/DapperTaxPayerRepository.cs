@@ -21,8 +21,16 @@ namespace Infrastructure
 
         public async Task AddAsync ( TaxPayer taxPayer )
         {
-            string sql = "INSERT INTO public.TaxPayers (Id, Identity, Address, NaceCode, Obligation, Application) VALUES (@Id, @Identity, @Address, @NaceCode, @Obligation, @Application)";
-            await _dbConnection.ExecuteAsync(sql, taxPayer);
+            try
+            {
+                string sql = "INSERT INTO TaxPayers (Id, Identity, Address, NaceCode, Obligation, Application) VALUES (@Id, @Identity, @Address, @NaceCode, @Obligation, @Application)";
+                await _dbConnection.ExecuteAsync(sql, taxPayer);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         public async Task DeleteAsync ( TaxPayer id )
